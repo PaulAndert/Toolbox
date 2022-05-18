@@ -1,0 +1,17 @@
+{% load bootstrap4 %}
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Verwaltung</title>
+
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+    </head>
+    <body>
+        {% bootstrap_messages %}
+        {% block content %}
+            Dummy aus basis template
+        {% endblock %}
+    </body>
+</html>
