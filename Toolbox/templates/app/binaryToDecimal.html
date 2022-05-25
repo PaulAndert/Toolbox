@@ -1,18 +1,18 @@
 {% extends 'app/base.html' %}
+{%  load bootstrap4 %}
 
 {% block content %}
 
-<h1>Alle Apps</h1>
+<h1>Binary to Decimal</h1>
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>test</th>
-        </tr>
-    </thead>
-    <tr>
-        <td>test inhalt kein plan</td>
-    </tr>
-</table>
+<form action="binaryToDecimal" method="post">
+    {% csrf_token %}
+
+    Enter your binary: <input type="text" name="bin" >
+    <br>
+    <input type="submit">
+    <p>result={{ result }}</p>
+
+</form>
 
 {% endblock %}

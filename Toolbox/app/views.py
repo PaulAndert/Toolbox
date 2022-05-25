@@ -17,8 +17,11 @@ class ApplicationView(DetailView):
     model = Application
 
 
-def binaryToDecimal(number):
-    return int(number, 2)
+def binaryToDecimal(request):
+    number = request.POST['bin']
+    result = int(number, 2)
+    return render(request, 'app/binaryToDecimal.html', {'page_title': 'binaryToDecimal',
+                                                        'result': result})
 
 def decimalToBinary(number):
     return bin(number)
