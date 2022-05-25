@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView
 from app.models import *
 
 
+
 class ApplicationList(ListView):
     model = Application
 
@@ -36,9 +37,9 @@ def hexaToDecimal(hexa_num):
 
 def rgbToCmyk(r, g, b, CMYK_SCALE = 100, RGB_SCALE = 255):
     if (r, g, b) == (0, 0, 0): return 0, 0, 0, CMYK_SCALE
+    y = 1 - b / RGB_SCALE
     c = 1 - r / RGB_SCALE
     m = 1 - g / RGB_SCALE
-    y = 1 - b / RGB_SCALE
     min_cmy = min(c, m, y)
     c = (c - min_cmy) / (1 - min_cmy)
     m = (m - min_cmy) / (1 - min_cmy)
@@ -51,4 +52,11 @@ def cmykToRgb(c, m, y, k, cmyk_scale = 100, rgb_scale=255):
     g = rgb_scale * (1.0 - m / float(cmyk_scale)) * (1.0 - k / float(cmyk_scale))
     b = rgb_scale * (1.0 - y / float(cmyk_scale)) * (1.0 - k / float(cmyk_scale))
     return r, g, b
+
+def manage_functions(request, pk=None):
+    if pk:
+        function = Application.objects.get(pk=pk).name
+
+    return render(request, f'app/{function}.html', {'page_title': f'{function}'})
+
 

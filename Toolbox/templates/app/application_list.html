@@ -9,6 +9,7 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -16,6 +17,7 @@
     <tr>
         <td>{{ app.name }}</td>
         <td>{{ app.description }}</td>
+        <td><a href="{% url 'manage' app.id %}" class="btn btn-primary">{{ app.name }}</a></td>
     </tr>
     {% endfor %}
 </table>
