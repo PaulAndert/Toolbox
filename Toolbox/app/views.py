@@ -20,11 +20,12 @@ class ApplicationView(DetailView):
 def binaryToDecimal(request):
     number = request.POST['bin']
     result = int(number, 2)
-    return render(request, 'app/binaryToDecimal.html', {'page_title': 'binaryToDecimal',
-                                                        'result': result})
+    return render(request, f'app/binaryToDecimal.html', {'page_title': f'binaryToDecimal', 'result': result})
 
-def decimalToBinary(number):
-    return bin(number)
+def decimalToBinary(request):
+    number = request.POST['bin']
+    result = bin(int(number))
+    return render(request, f'app/decimalToBinary.html', {'page_title': f'decimalToBinary', 'result': result})
 
 def octalToDecimal(number):
     return int(number, 8)
@@ -60,6 +61,15 @@ def manage_functions(request, pk=None):
     if pk:
         function = Application.objects.get(pk=pk).name
 
-    return render(request, f'app/{function}.html', {'page_title': f'{function}'})
+    return render(request, f'app/{function}.html', {'page_title': f'{function}',
+                                                    'id': f'{pk}'})
 
+switcher = {
+    1:binaryToDecimal,
+    2:decimalToBinary,
+}
 
+def select_function(request, pk=None):
+    argument = request.POST['bin']
+    func = switcher.get(pk)
+    return func(request)

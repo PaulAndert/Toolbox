@@ -5,13 +5,13 @@
 
 <h1>Binary to Decimal</h1>
 
-<form action="binaryToDecimal" method="post">
+<form action="results" method="post">
     {% csrf_token %}
 
     Enter your binary: <input type="text" name="bin" >
     <br>
     <input type="submit">
-    <p>result={{ result }}</p>
+    <p>decimal result={{ result }}</p>
 
 </form>
 
