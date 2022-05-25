@@ -23,7 +23,7 @@ def decimalToBinary(number):
     return bin(number)
 
 def octalToDecimal(number):
-    return int(number)
+    return int(number, 8)
 
 def decimalToOctal(decimal_num):
     return oct(decimal_num)
