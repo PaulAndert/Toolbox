@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+{%  load bootstrap4 %}
+
+{% block content %}
+
+<h1>Decimal to Binary</h1>
+
+<form action="results" method="post">
+    {% csrf_token %}
+
+    Enter your decimal: <input type="text" name="bin" >
+    <br>
+    <input type="submit">
+    <p>binary result={{ result }}</p>
+
+</form>
+
+{% endblock %}
