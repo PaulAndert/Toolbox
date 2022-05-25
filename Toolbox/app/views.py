@@ -58,7 +58,7 @@ def cmykToRgb(c, m, y, k, cmyk_scale = 100, rgb_scale=255):
 
 def manage_functions(request, pk=None):
     if pk:
-        function = Application.objects.get(pk=pk).name
+        function = Application.objects.get(pk=pk).functionname
 
     return render(request, f'app/{function}.html', {'page_title': f'{function}'})
 

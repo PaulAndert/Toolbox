@@ -4,22 +4,19 @@
 
 <h1>Alle Apps</h1>
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th></th>
-        </tr>
-    </thead>
 
-    {%  for app in object_list %}
-    <tr>
-        <td>{{ app.name }}</td>
-        <td>{{ app.description }}</td>
-        <td><a href="{% url 'manage' app.id %}" class="btn btn-primary">{{ app.name }}</a></td>
-    </tr>
-    {% endfor %}
-</table>
+    <div class="d-flex flex-wrap" style="display: block; margin-left: 12%"  >
+
+            {%  for app in object_list %}
+
+                <div class="p-2" >
+                    <p><a style="width: 400px; font-size:50px; margin:40px " href="{% url 'manage' app.id %}" class="btn btn-outline-primary">{{ app.name }}</a></p>
+                </div>
+
+            {% endfor %}
+
+    </div>
+
+
 
 {% endblock %}
