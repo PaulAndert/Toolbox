@@ -22,6 +22,6 @@ urlpatterns = [
     path('', ApplicationList.as_view(), name='app_list'),
     path('admin/', admin.site.urls),
     path('<int:pk>/', manage_functions, name='manage'),
-    path('1/binaryToDecimal', binaryToDecimal, name='binaryToDecimal')
+    path('<int:pk>/results', select_function, name='results')
 
 ]
