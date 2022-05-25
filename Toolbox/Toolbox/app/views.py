@@ -30,3 +30,11 @@ def octalToDecimal(number):
 
 def decimalToOctal(decimal_num):
     return oct(decimal_num)
+
+def decimalToHexa(num):
+    return hex(num)
+
+def hexaToDecimal(hexa_num):
+    return int(hexa_num, 16)
+
+
