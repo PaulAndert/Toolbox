@@ -3,15 +3,15 @@
 
 {% block content %}
 
-<h1>Decimal to Binary</h1>
+<h1>Dezimal zu Binär</h1>
 
 <form action="results" method="post">
     {% csrf_token %}
 
-    Enter your decimal: <input type="text" name="bin" >
+    Gib deine Detimalzahl ein: <input type="text" name="bin" value="{{ number }}">
     <br>
     <input type="submit">
-    <p>binary result={{ result }}</p>
+    <p>Ergebnis = {{ result }}</p>
 
 </form>
 

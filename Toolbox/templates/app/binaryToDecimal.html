@@ -3,14 +3,27 @@
 
 {% block content %}
 
-    <h1 style="margin-left: 50px;">Binary to Decimal</h1><br>
+    <h1 style="margin-left: 50px;">Binär zu Dezimal</h1><br>
+
+    <h3 style="margin-left: 50px;">Rechner:</h3><br>
+    <form action="results" method="post">
+        {% csrf_token %}
+
+        <div style="margin-left: 100px; font-size: 20px;">
+            Gebe deine Binärzahl ein: <input type="text" name="bin" value="{{ number }}"><br>
+            <input type="submit">
+            <p>Ergebnis = {{ result }}</p>
+        </div>
+    </form><br>
+
     <h3 style="margin-left: 50px;">Tutorial zum Selbermachen:</h3><br>
-    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Im Binärsystem erhöht sich das Gewicht jeder Ziffer wie dargestellt um den Faktor 2. Dann hat die erste Ziffer
-        rechts ein Gewicht von 1 ( <span class="ntxt">2<sup>0</sup></span> ), die zweite Ziffer ein Gewicht von 2 (
-        <span class="ntxt">2<sup>1</sup></span> ), die dritte ein Gewicht von 4 ( <span
-                class="ntxt">2<sup>2</sup></span> ), die vierte ein Gewicht von 8 ( <span
-                class="ntxt">2<sup>3</sup></span> ) und so weiter.</p>
-    <table  style="margin-left: 100px; margin-right:100px; font-size: 20px;" class="table table-striped">
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Im Binärsystem erhöht sich das Gewicht jeder
+        Ziffer wie dargestellt um den Faktor 2. Dann hat die erste Ziffer
+        rechts ein Gewicht von 1 (<span class="ntxt">2<sup>0</sup></span>), die zweite Ziffer ein Gewicht von
+        2 (<span class="ntxt">2<sup>1</sup></span>), die dritte ein Gewicht von 4 (<span
+                class="ntxt">2<sup>2</sup></span>), die vierte ein Gewicht von 8 (<span
+                class="ntxt">2<sup>3</sup></span>) und so weiter.</p>
+    <table style="margin-left: 100px; margin-right: 100px; font-size: 20px;" class="table table-striped">
         <thead class="thead-dark">
         <tr>
             <th>MSB</th>
@@ -20,15 +33,15 @@
         </thead>
         <tbody>
         <tr>
-            <td style="width:50px;">2<sup>8</sup></td>
-            <td style="width:50px;">2<sup>7</sup></td>
-            <td style="width:50px;">2<sup>6</sup></td>
-            <td style="width:50px;">2<sup>5</sup></td>
-            <td style="width:50px;">2<sup>4</sup></td>
-            <td style="width:50px;">2<sup>3</sup></td>
-            <td style="width:50px;">2<sup>2</sup></td>
-            <td style="width:50px;">2<sup>1</sup></td>
-            <td style="width:50px;">2<sup>0</sup></td>
+            <td>2<sup>8</sup></td>
+            <td>2<sup>7</sup></td>
+            <td>2<sup>6</sup></td>
+            <td>2<sup>5</sup></td>
+            <td>2<sup>4</sup></td>
+            <td>2<sup>3</sup></td>
+            <td>2<sup>2</sup></td>
+            <td>2<sup>1</sup></td>
+            <td>2<sup>0</sup></td>
         </tr>
         <tr>
             <td>256</td>
@@ -43,20 +56,8 @@
         </tr>
         </tbody>
     </table><br>
-    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Durch Addition ALLER Dezimalzahlen von rechts nach links an den Stellen, wo eine „1“ steht, ergibt sich die
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Durch Addition ALLER Dezimalzahlen von rechts
+        nach links an den Stellen, wo eine „1“ steht, ergibt sich die
         insesamte Deizmalzahl, also das Ergebnis</p><br>
-
-
-    <h3 style="margin-left: 50px;">Rechner:</h3><br>
-    <form action="results" method="post">
-        {% csrf_token %}
-
-        <div style="margin-left: 100px; font-size: 20px;">
-            Gebe deine Binärzahl ein: <input type="text" name="bin"><br>
-            <input type="submit">
-            <p>Ergebnis = {{ result }}</p>
-        </div>
-
-    </form>
 
 {% endblock %}

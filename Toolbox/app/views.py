@@ -8,7 +8,6 @@ from django.views.generic import ListView, DetailView
 from app.models import *
 
 
-
 class ApplicationList(ListView):
     model = Application
 
@@ -24,37 +23,53 @@ def binaryToDecimal(request):
     except:
         result = "Geben Sie bitte eine Binärzahl ein"
     return render(request, 'app/binaryToDecimal.html', {'page_title': 'binaryToDecimal',
-                                                        'result': result})
+                                                        'result': result, 'number': number})
+
 
 def decimalToBinary(request):
     number = request.POST['bin']
-    result = bin(int(number))
-    return render(request, f'app/decimalToBinary.html', {'page_title': f'decimalToBinary', 'result': result})
+    try:
+        result = bin(int(number))
+    except:
+        result = "Geben Sie bitte eine Dezimalzahl ein"
+    return render(request, f'app/decimalToBinary.html',
+                  {'page_title': f'decimalToBinary', 'result': result, 'number': number})
+
 
 def octalToDecimal(number):
     return int(number, 8)
 
+
 def decimalToOctal(decimal_num):
     return oct(decimal_num)
+
 
 def decimalToHexa(num):
     return hex(num)
 
+
 def hexaToDecimal(hexa_num):
     return int(hexa_num, 16)
 
-def rgbToCmyk(request, CMYK_SCALE = 100, RGB_SCALE = 255):
+
+def rgbToCmyk(request, CMYK_SCALE=100, RGB_SCALE=255):
     try:
         r = int(request.POST['r'])
         g = int(request.POST['g'])
         b = int(request.POST['b'])
     except:
-        return render(request, 'app/rgbToCmyk.html', {'page_title': f'rgbToCmyk', 'op': 1, 'error': "Bitte geben sie 3 nummern zwischen 0 und 255 ein", 'c': "", 'm': "", 'y': "", 'k': "", })
+        return render(request, 'app/rgbToCmyk.html',
+                      {'page_title': f'rgbToCmyk', 'op': 1,
+                       'error': "Bitte geben sie 3 nummern zwischen 0 und 255 ein",
+                       'c': "", 'm': "", 'y': "", 'k': "", })
 
-    if not(0 <= r <= 255) or not(0 <= g <= 255) or not(0 <= b <= 255):
-        return render(request, f'app/rgbToCmyk.html', {'page_title': f'rgbToCmyk', 'op': 1, 'error': "Bitte nur nummern zwischen 0 und 255 nutzen", 'c': "", 'm': "", 'y': "", 'k': "", })
+    if not (0 <= r <= 255) or not (0 <= g <= 255) or not (0 <= b <= 255):
+        return render(request, f'app/rgbToCmyk.html',
+                      {'page_title': f'rgbToCmyk', 'op': 1, 'error': "Bitte nur nummern zwischen 0 und 255 nutzen",
+                       'c': "", 'm': "", 'y': "", 'k': "", })
     if (r, g, b) == (0, 0, 0):
-        return render(request, f'app/rgbToCmyk.html', {'page_title': f'rgbToCmyk', 'op': 0, 'error': "", 'c': 0, 'm': 0, 'y': 0, 'k': CMYK_SCALE, })
+        return render(request, f'app/rgbToCmyk.html',
+                      {'page_title': f'rgbToCmyk', 'op': 0, 'error': "", 'c': 0, 'm': 0, 'y': 0, 'k': CMYK_SCALE, })
     y = 1 - b / RGB_SCALE
     c = 1 - r / RGB_SCALE
     m = 1 - g / RGB_SCALE
@@ -63,9 +78,12 @@ def rgbToCmyk(request, CMYK_SCALE = 100, RGB_SCALE = 255):
     m = (m - min_cmy) / (1 - min_cmy)
     y = (y - min_cmy) / (1 - min_cmy)
     k = min_cmy
-    return render(request, f'app/rgbToCmyk.html', {'page_title': f'rgbToCmyk', 'op': 0, 'error': "", 'c': c * CMYK_SCALE, 'm': m * CMYK_SCALE, 'y': y * CMYK_SCALE, 'k': k * CMYK_SCALE, })
+    return render(request, f'app/rgbToCmyk.html',
+                  {'page_title': f'rgbToCmyk', 'op': 0, 'error': "", 'c': c * CMYK_SCALE, 'm': m * CMYK_SCALE,
+                   'y': y * CMYK_SCALE, 'k': k * CMYK_SCALE, })
 
-def cmykToRgb(request, cmyk_scale = 100, rgb_scale=255):
+
+def cmykToRgb(request, cmyk_scale=100, rgb_scale=255):
     try:
         c = float(request.POST['c'])
         m = float(request.POST['m'])
@@ -97,16 +115,18 @@ def manage_functions(request, pk=None):
 
     return render(request, f'app/{function}.html', {'page_title': f'{function}', 'id': f'{pk}', 'op': 0, })
 
+
 switcher = {
-    1:binaryToDecimal,
-    2:decimalToBinary,
-    3:octalToDecimal,
-    4:decimalToOctal,
-    5:decimalToHexa,
-    6:hexaToDecimal,
-    7:rgbToCmyk,
-    8:cmykToRgb,
+    1: binaryToDecimal,
+    2: decimalToBinary,
+    3: octalToDecimal,
+    4: decimalToOctal,
+    5: decimalToHexa,
+    6: hexaToDecimal,
+    7: rgbToCmyk,
+    8: cmykToRgb,
 }
+
 
 def select_function(request, pk=None):
     func = switcher.get(pk)
