@@ -36,8 +36,14 @@ def decimalToBinary(request):
                   {'page_title': f'decimalToBinary', 'result': result, 'number': number})
 
 
-def octalToDecimal(number):
-    return int(number, 8)
+def octalToDecimal(request):
+    number = request.POST['oct']
+    try:
+        result = int(number, 8)
+    except:
+        result = "Geben Sie bitte eine Oktalzahl ein"
+    return render(request, f'app/octalToDecimal.html',
+                  {'page_title': f'octalToDecimal', 'result': result, 'number': number})
 
 
 def decimalToOctal(decimal_num):
