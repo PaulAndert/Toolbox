@@ -1,18 +1,46 @@
 {% extends 'app/base.html' %}
-{%  load bootstrap4 %}
+{% load bootstrap4 %}
 
 {% block content %}
 
-<h1>Dezimal zu Binär</h1>
+    <h1 style="margin-left: 50px;">Dezimal zu Binär</h1>
 
-<form action="results" method="post">
-    {% csrf_token %}
+    <h3 style="margin-left: 50px;">Rechner:</h3><br>
+    <form style="margin-left: 100px; font-size: 20px;" action="results" method="post">
+        {% csrf_token %}
 
-    Gib deine Detimalzahl ein: <input type="text" name="bin" value="{{ number }}">
-    <br>
-    <input type="submit">
-    <p>Ergebnis = {{ result }}</p>
+        Gib deine Dezimalzahl ein: <input type="text" name="bin" value="{{ number }}">
+        <br>
+        <input type="submit">
+        <p>Ergebnis = {{ result }}</p>
 
-</form>
+    </form><br>
+
+    <h3 style="margin-left: 50px;">Tutorial zum Selbermachen:</h3><br>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Um eine Dezimalzahl in eine Binärzahl
+        umzuwandeln, muss die Dezimalzahl nur durch die Zahl 2 dividiert und der Rest notiert werden.</p>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Da eine Zahl dividiert durch 2 immer nur den
+        Rest 0 oder 1 ergeben kann (da beim Rest 2 der Quotient um 1 erhöht werden müsste), entsteht daraus die
+        äquivalente Binärzahl. Folgende Schritte müssen immer wieder durchgeführt werden:</p>
+    <ol style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+        <li>Die Zahl durch 2 dividieren</li>
+        <li>Den Rest der Division notieren</li>
+        <li>Falls das Ergebnis nicht 0 ist, Schritt 1 und 2 wiederholen</li>
+    <li>Das Ergebnis lässt sich nach Abschluss von unten nach oben aus dem Rest ablesen</li>
+    </ol>
+
+    <h4 style="margin-left: 50px;">Beispiel:</h4>
+    <div style="margin-left: 100px; margin-right: 100px; font-size: 20px;" class="table table-striped">
+        <p>234 / 2 = 117 Rest: 0</p>
+        <p>117 / 2 = 58 Rest: 1</p>
+        <p>58 / 2 = 29 Rest: 0</p>
+        <p>29 / 2 = 14 Rest: 1</p>
+        <p>14 / 2 = 7 Rest: 0</p>
+        <p>7 / 2 = 3 Rest: 1</p>
+        <p>3 / 2 = 1 Rest: 1</p>
+        <p>1 / 2 = 0 Rest: 1</p>
+    </div>
+    <p style="margin-left: 100px; margin-right: 100px; font-size: 20px;">Die Dezimalzahl 234 ergibt daher die Binärzahl:
+        11101010</p>
 
 {% endblock %}

@@ -6,10 +6,10 @@
     <h1 style="margin-left: 50px;">Binär zu Dezimal</h1><br>
 
     <h3 style="margin-left: 50px;">Rechner:</h3><br>
-    <form action="results" method="post">
+    <form style="margin-left: 100px; font-size: 20px;" action="results" method="post">
         {% csrf_token %}
 
-        <div style="margin-left: 100px; font-size: 20px;">
+        <div>
             Gebe deine Binärzahl ein: <input type="text" name="bin" value="{{ number }}"><br>
             <input type="submit">
             <p>Ergebnis = {{ result }}</p>
