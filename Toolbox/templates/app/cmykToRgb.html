@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h1 style="margin-left: 50px;">CMYK zu RGB</h1>
+    <h1 style="margin-left: 50px;">Rechner:</h1>
+    <form action="results" method="post">
+        {% csrf_token %}
+
+        <div style="margin-left: 100px; font-size: 20px;">
+            <p>Gebe den C-wert ein: <input type="text" name="c"></p>
+            <p>Gebe den M-wert ein: <input type="text" name="m"></p>
+            <p>Gebe den Y-wert ein: <input type="text" name="y"></p>
+            <p>Gebe den K-wert ein: <input type="text" name="k"> (Bitte Komma zahlen mit Punkt angeben)</p>
+            <input type="submit" class="btn btn-outline-primary">
+            <p style="opacity:{{ op }}">Error : {{ error }}</p>
+            <p>R : {{ r }} </p>
+            <p>G : {{ g }} </p>
+            <p>B : {{ b }} </p>
+        </div>
+
+    </form>
+
+    <h3 style="margin-left: 50px;">Tutorial zum Selbermachen:</h3>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+        Für die RGB werte muss man im prinzip immer dasselbe machen<br>
+        man nimmt 255 und multipliziert ihn mit (1 - Cyan-wert / 100) <br>
+        das multipliziert man dann mit (1 - Kontroll-wert / 100) um Rot zu erhalten
+        also
+        rot = 255 * (1 - cyan / 100) * (1 - kontroll / 100)<br>
+        grün = 255 * (1 - magenta / 100) * (1 - kontroll / 100)<br>
+        blau = 255 * (1 - gelb / 100) * (1 - kontroll / 100)<br>
+    </p>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+
+    </p>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+
+    </p>
+
+{% endblock %}

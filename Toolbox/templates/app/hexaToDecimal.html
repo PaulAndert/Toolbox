@@ -1,0 +1,63 @@
+{% extends 'app/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    <h1 style="margin-left: 50px;">Hexa zu Dezimal</h1><br>
+
+    <h3 style="margin-left: 50px;">Rechner:</h3><br>
+    <form style="margin-left: 100px; font-size: 20px;" action="results" method="post">
+        {% csrf_token %}
+
+        <div>
+            Gebe deine Hexadezimalzahl ein: <input type="text" name="hex" value="{{ number }}"><br>
+            <input type="submit" class="btn btn-outline-primary">
+            <p style="opacity:{{ op }}">Error : {{ error }}</p>
+            <p>Ergebnis = {{ result }}</p>
+        </div>
+    </form><br>
+
+    <h3 style="margin-left: 50px;">Tutorial zum Selbermachen:</h3><br>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Im Hexadezimalsystem erhöht sich das Gewicht jeder
+        Ziffer wie dargestellt um den Faktor 16. Dann hat die erste Ziffer
+        rechts ein Gewicht von 1 (<span class="ntxt">16<sup>0</sup></span>), die zweite Ziffer ein Gewicht von
+        16 (<span class="ntxt">16<sup>1</sup></span>), die dritte ein Gewicht von 256 (<span
+                class="ntxt">16<sup>2</sup></span>), die vierte ein Gewicht von 4096 (<span
+                class="ntxt">16<sup>3</sup></span>) und so weiter.</p>
+    <table style="margin-left: 100px; margin-right: 100px; font-size: 20px;" class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>MSB</th>
+            <th colspan="7">Hexadezimalzahl</th>
+            <th>LSB</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>16<sup>7</sup></td>
+            <td>16<sup>6</sup></td>
+            <td>16<sup>5</sup></td>
+            <td>16<sup>4</sup></td>
+            <td>16<sup>3</sup></td>
+            <td>16<sup>2</sup></td>
+            <td>16<sup>1</sup></td>
+            <td>16<sup>0</sup></td>
+        </tr>
+        <tr>
+            <td>268.435.456</td>
+            <td>16.777.216</td>
+            <td>1.048.576</td>
+            <td>65.536</td>
+            <td>4096</td>
+            <td>256</td>
+            <td>16</td>
+            <td>1</td>
+        </tr>
+        </tbody>
+    </table><br>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Durch Addition ALLER Zahlen multipliziert mit
+        deren Faktor an
+        der jeweilgen Stelle (235&#8321;&#8326; = 2*256 + 3*16 + 5*1 = 565&#8321;&#8320;), ergibt sich die
+        insgesamte Dezimalzahl, also das Ergebnis.</p><br>
+
+{% endblock %}

@@ -19,43 +19,78 @@ class ApplicationView(DetailView):
 def binaryToDecimal(request):
     number = request.POST['bin']
     try:
-        result = int(number, 2)
+        return render(request, 'app/binaryToDecimal.html',
+                      {'page_title': 'binaryToDecimal', 'op': 0, 'error': "",
+                       'result': int(number, 2), 'number': number})
+
     except:
-        result = "Geben Sie bitte eine Binärzahl ein"
-    return render(request, 'app/binaryToDecimal.html', {'page_title': 'binaryToDecimal',
-                                                        'result': result, 'number': number})
+        return render(request, 'app/binaryToDecimal.html',
+                      {'page_title': 'binaryToDecimal', 'op': 1, 'error': "Geben Sie bitte eine Binärzahl ein",
+                       'result': "", 'number': number})
+
 
 
 def decimalToBinary(request):
     number = request.POST['bin']
     try:
-        result = bin(int(number))
+        return render(request, 'app/decimalToBinary.html',
+                      {'page_title': 'decimalToBinary', 'op': 0, 'error': "",
+                       'result': bin(int(number)), 'number': number})
     except:
-        result = "Geben Sie bitte eine Dezimalzahl ein"
-    return render(request, f'app/decimalToBinary.html',
-                  {'page_title': f'decimalToBinary', 'result': result, 'number': number})
+        return render(request, 'app/decimalToBinary.html',
+                      {'page_title': 'decimalToBinary', 'op': 1, 'error': "Geben Sie bitte eine Dezimalzahl ein",
+                       'result': "", 'number': number})
 
 
 def octalToDecimal(request):
     number = request.POST['oct']
     try:
-        result = int(number, 8)
+        return render(request, 'app/octalToDecimal.html',
+                      {'page_title': 'octalToDecimal', 'op': 0, 'error': "",
+                       'result': int(number, 8), 'number': number})
     except:
-        result = "Geben Sie bitte eine Oktalzahl ein"
-    return render(request, f'app/octalToDecimal.html',
-                  {'page_title': f'octalToDecimal', 'result': result, 'number': number})
+        return render(request, 'app/octalToDecimal.html',
+                      {'page_title': 'octalToDecimal', 'op': 1, 'error': "Geben Sie bitte eine Dezimalzahl ein",
+                       'result': "", 'number': number})
 
 
-def decimalToOctal(decimal_num):
-    return oct(decimal_num)
+def decimalToOctal(request):
+    number = request.POST['bin']
+    try:
+        result = oct(int(number))
+    except:
+        error = "Geben Sie bitte eine Dezimalzahl ein"
+        result = ""
+        return render(request, f'app/decimalToOctal.html',
+                      {'page_title': f'decimalToOctal', 'result': result, 'number': number, 'op': 1, 'error': error})
+    return render(request, f'app/decimalToOctal.html',
+                  {'page_title': f'decimalToOctal', 'result': result, 'number': number, "op": 0})
 
 
-def decimalToHexa(num):
-    return hex(num)
+def decimalToHexa(request):
+    number = request.POST['bin']
+    try:
+        result = hex(int(number))
+    except:
+        error = "Geben Sie bitte eine Dezimalzahl ein"
+        result = ""
+        return render(request, f'app/decimalToHexa.html',
+                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error' : error})
+    return render(request, f'app/decimalToHexa.html',
+                  {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 0})
 
 
-def hexaToDecimal(hexa_num):
-    return int(hexa_num, 16)
+def hexaToDecimal(request):
+    number = request.POST['hex']
+    try:
+        result = int(number, 16)
+    except:
+        error = "Geben Sie bitte eine Hexadezimalzahl ein"
+        result = ""
+        return render(request, f'app/hexaToDecimal.html',
+                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error' : error})
+    return render(request, f'app/hexaToDecimal.html',
+                  {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 0})
 
 
 def rgbToCmyk(request, CMYK_SCALE=100, RGB_SCALE=255):
