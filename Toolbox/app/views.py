@@ -59,9 +59,12 @@ def decimalToOctal(request):
     try:
         result = oct(int(number))
     except:
-        result = "Geben Sie bitte eine Dezimalzahl ein"
+        error = "Geben Sie bitte eine Dezimalzahl ein"
+        result = ""
+        return render(request, f'app/decimalToOctal.html',
+                      {'page_title': f'decimalToOctal', 'result': result, 'number': number, 'op': 1, 'error': error})
     return render(request, f'app/decimalToOctal.html',
-                  {'page_title': f'decimalToOctal', 'result': result, 'number': number})
+                  {'page_title': f'decimalToOctal', 'result': result, 'number': number, "op": 0})
 
 
 def decimalToHexa(request):
@@ -69,9 +72,12 @@ def decimalToHexa(request):
     try:
         result = hex(int(number))
     except:
-        result = "Geben Sie bitte eine Dezimalzahl ein"
+        error = "Geben Sie bitte eine Dezimalzahl ein"
+        result = ""
+        return render(request, f'app/decimalToHexa.html',
+                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error' : error})
     return render(request, f'app/decimalToHexa.html',
-                  {'page_title': f'decimalToHexa', 'result': result, 'number': number})
+                  {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 0})
 
 
 def hexaToDecimal(request):
@@ -79,9 +85,12 @@ def hexaToDecimal(request):
     try:
         result = int(number, 16)
     except:
-        result = "Geben Sie bitte eine Hexadezimalzahl ein"
+        error = "Geben Sie bitte eine Hexadezimalzahl ein"
+        result = ""
+        return render(request, f'app/hexaToDecimal.html',
+                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error' : error})
     return render(request, f'app/hexaToDecimal.html',
-                  {'page_title': f'hexaToDecimal', 'result': result, 'number': number})
+                  {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 0})
 
 
 def rgbToCmyk(request, CMYK_SCALE=100, RGB_SCALE=255):
