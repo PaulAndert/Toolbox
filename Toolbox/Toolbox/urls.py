@@ -24,6 +24,4 @@ urlpatterns = [
     path('<int:pk>/', manage_functions, name='manage'),
     path('<int:pk>/results', select_function, name='results'),
 
-    path('test', testfuction, name='test'),
-
 ]
