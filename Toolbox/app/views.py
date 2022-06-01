@@ -9,6 +9,7 @@ from app.models import *
 
 alphabet = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: 'i', 10: 'j', }
 
+
 class ApplicationList(ListView):
     model = Application
 
@@ -28,7 +29,6 @@ def binaryToDecimal(request):
         return render(request, 'app/binaryToDecimal.html',
                       {'page_title': 'binaryToDecimal', 'op': 1, 'error': "Geben Sie bitte eine Binärzahl ein",
                        'result': "", 'number': number})
-
 
 
 def decimalToBinary(request):
@@ -76,7 +76,7 @@ def decimalToHexa(request):
         error = "Geben Sie bitte eine Dezimalzahl ein"
         result = ""
         return render(request, f'app/decimalToHexa.html',
-                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error' : error})
+                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error': error})
     return render(request, f'app/decimalToHexa.html',
                   {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 0})
 
@@ -89,7 +89,7 @@ def hexaToDecimal(request):
         error = "Geben Sie bitte eine Hexadezimalzahl ein"
         result = ""
         return render(request, f'app/hexaToDecimal.html',
-                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error' : error})
+                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error': error})
     return render(request, f'app/hexaToDecimal.html',
                   {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 0})
 
@@ -164,11 +164,12 @@ def manage_functions(request, pk=None):
                    'templatecode': val,
                    })
 
+
 def select_function(request, pk=None):
     function = Application.objects.get(pk=pk)
     try:
         values = ""
-        for i in range(1, function.inputanzahl+1):
+        for i in range(1, function.inputanzahl + 1):
             values += alphabet[i] + " = '" + (request.POST[alphabet[i]]) + "'\n"
 
         loc = {}
@@ -177,16 +178,19 @@ def select_function(request, pk=None):
 
         exec(values + function.functionname, globals(), loc)
 
+        if loc['error']:
+            raise ValueError()
+
         val = function.templatetext.replace('{{ opci }}', '0', 1)
 
-        for i in range(1, function.outputanzahl+1):
+        for i in range(1, function.outputanzahl + 1):
             val = val.replace('{{ ' + alphabet[i] + ' }}', str(loc[alphabet[i]]))
 
         return render(request, f'app/template.html',
                       {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val, })
     except:
-        val = function.templatetext.replace('{{ opci }}', '1').replace('{{ error }}', 'Das ist ein Fehler')
-        for i in range(1, function.outputanzahl+1):
+        val = function.templatetext.replace('{{ opci }}', '1').replace('{{ error }}', function.errormessage)
+        for i in range(1, function.outputanzahl + 1):
             val = val.replace('{{ ' + alphabet[i] + ' }}', '')
         return render(request, f'app/template.html',
                       {'page_title': f'{function.name}',
