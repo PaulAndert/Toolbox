@@ -12,6 +12,7 @@ alphabet = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: '
 class ApplicationList(ListView):
     model = Application
 
+
 class ApplicationView(DetailView):
     model = Application
 
@@ -27,6 +28,7 @@ def binaryToDecimal(request):
         return render(request, 'app/binaryToDecimal.html',
                       {'page_title': 'binaryToDecimal', 'op': 1, 'error': "Geben Sie bitte eine Binärzahl ein",
                        'result': "", 'number': number})
+
 
 
 def decimalToBinary(request):
@@ -74,7 +76,7 @@ def decimalToHexa(request):
         error = "Geben Sie bitte eine Dezimalzahl ein"
         result = ""
         return render(request, f'app/decimalToHexa.html',
-                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error': error})
+                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error' : error})
     return render(request, f'app/decimalToHexa.html',
                   {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 0})
 
@@ -87,7 +89,7 @@ def hexaToDecimal(request):
         error = "Geben Sie bitte eine Hexadezimalzahl ein"
         result = ""
         return render(request, f'app/hexaToDecimal.html',
-                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error': error})
+                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error' : error})
     return render(request, f'app/hexaToDecimal.html',
                   {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 0})
 
@@ -135,7 +137,7 @@ def cmykToRgb(request, cmyk_scale=100, rgb_scale=255):
                       {'page_title': f'cmykToRgb', 'op': 1,
                        'error': "Bitte geben sie 4 nummern zwischen 0 und 100 ein",
                        'r': "", 'g': "", 'b': "", })
-    if not (0 <= c <= 100) or not (0 <= m <= 100) or not (0 <= y <= 100) or not (100 <= k <= 100):
+    if not (0 <= c <= 100) or not (0 <= m <= 100) or not (0 <= y <= 100) or not (0.0 <= k <= 1.0):
         return render(request, f'app/cmykToRgb.html',
                       {'page_title': f'cmykToRgb', 'op': 1,
                        'error': "Bitte nur nummern zwischen 0 und 100 nutzen bzw. bei kontrolle nur von 0 bis 1",
