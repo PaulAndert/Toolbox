@@ -7,10 +7,10 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from app.models import *
 
+alphabet = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: 'i', 10: 'j', }
 
 class ApplicationList(ListView):
     model = Application
-
 
 class ApplicationView(DetailView):
     model = Application
@@ -27,7 +27,6 @@ def binaryToDecimal(request):
         return render(request, 'app/binaryToDecimal.html',
                       {'page_title': 'binaryToDecimal', 'op': 1, 'error': "Geben Sie bitte eine Binärzahl ein",
                        'result': "", 'number': number})
-
 
 
 def decimalToBinary(request):
@@ -75,7 +74,7 @@ def decimalToHexa(request):
         error = "Geben Sie bitte eine Dezimalzahl ein"
         result = ""
         return render(request, f'app/decimalToHexa.html',
-                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error' : error})
+                      {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 1, 'error': error})
     return render(request, f'app/decimalToHexa.html',
                   {'page_title': f'decimalToHexa', 'result': result, 'number': number, 'op': 0})
 
@@ -88,7 +87,7 @@ def hexaToDecimal(request):
         error = "Geben Sie bitte eine Hexadezimalzahl ein"
         result = ""
         return render(request, f'app/hexaToDecimal.html',
-                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error' : error})
+                      {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 1, 'error': error})
     return render(request, f'app/hexaToDecimal.html',
                   {'page_title': f'hexaToDecimal', 'result': result, 'number': number, 'op': 0})
 
@@ -136,7 +135,7 @@ def cmykToRgb(request, cmyk_scale=100, rgb_scale=255):
                       {'page_title': f'cmykToRgb', 'op': 1,
                        'error': "Bitte geben sie 4 nummern zwischen 0 und 100 ein",
                        'r': "", 'g': "", 'b': "", })
-    if not (0 <= c <= 100) or not (0 <= m <= 100) or not (0 <= y <= 100) or not (0.0 <= k <= 1.0):
+    if not (0 <= c <= 100) or not (0 <= m <= 100) or not (0 <= y <= 100) or not (100 <= k <= 100):
         return render(request, f'app/cmykToRgb.html',
                       {'page_title': f'cmykToRgb', 'op': 1,
                        'error': "Bitte nur nummern zwischen 0 und 100 nutzen bzw. bei kontrolle nur von 0 bis 1",
@@ -152,23 +151,43 @@ def cmykToRgb(request, cmyk_scale=100, rgb_scale=255):
 
 def manage_functions(request, pk=None):
     if pk:
-        function = Application.objects.get(pk=pk).functionname
-
-    return render(request, f'app/{function}.html', {'page_title': f'{function}', 'id': f'{pk}', 'op': 0, })
-
-
-switcher = {
-    1: binaryToDecimal,
-    2: decimalToBinary,
-    3: octalToDecimal,
-    4: decimalToOctal,
-    5: decimalToHexa,
-    6: hexaToDecimal,
-    7: rgbToCmyk,
-    8: cmykToRgb,
-}
-
+        function = Application.objects.get(pk=pk)
+    val = function.templatetext.replace('{{ opci }}', '0').replace('{{ error }}', '')
+    for i in range(1, function.outputanzahl + 1):
+        val = val.replace('{{ ' + alphabet[i] + ' }}', '')
+    return render(request, f'app/template.html',
+                  {'page_title': f'{function.name}',
+                   'id': f'{pk}',
+                   'op': 0,
+                   'templatecode': val,
+                   })
 
 def select_function(request, pk=None):
-    func = switcher.get(pk)
-    return func(request)
+    function = Application.objects.get(pk=pk)
+    try:
+        values = ""
+        for i in range(1, function.inputanzahl+1):
+            values += alphabet[i] + " = '" + (request.POST[alphabet[i]]) + "'\n"
+
+        loc = {}
+
+        print(values + function.functionname)
+
+        exec(values + function.functionname, globals(), loc)
+
+        val = function.templatetext.replace('{{ opci }}', '0', 1)
+
+        for i in range(1, function.outputanzahl+1):
+            val = val.replace('{{ ' + alphabet[i] + ' }}', str(loc[alphabet[i]]))
+
+        return render(request, f'app/template.html',
+                      {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val, })
+    except:
+        val = function.templatetext.replace('{{ opci }}', '1').replace('{{ error }}', 'Das ist ein Fehler')
+        for i in range(1, function.outputanzahl+1):
+            val = val.replace('{{ ' + alphabet[i] + ' }}', '')
+        return render(request, f'app/template.html',
+                      {'page_title': f'{function.name}',
+                       'id': f'{pk}',
+                       'templatecode': val
+                       })

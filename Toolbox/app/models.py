@@ -10,4 +10,7 @@ class Application(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=300)
     functionname = models.CharField(max_length=50)
+    templatetext = models.CharField(max_length=500)
+    inputanzahl = models.IntegerField()
+    outputanzahl = models.IntegerField()
 
