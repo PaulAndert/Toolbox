@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    <h1 style="margin-left: 50px;">Dezimal zu Hexa</h1>
+
+    <h3 style="margin-left: 50px;">Rechner:</h3><br>
+    <form style="margin-left: 100px; font-size: 20px;" action="results" method="post">
+        {% csrf_token %}
+
+        Gib deine Dezimalzahl ein: <input type="text" name="bin" value="{{ number }}">
+        <br>
+        <input type="submit">
+        <p>Ergebnis = {{ result }}</p>
+
+    </form><br>
+
+    <h3 style="margin-left: 50px;">Tutorial zum Selbermachen:</h3><br>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Um eine Dezimalzahl in eine Hexadezimalzahl
+        umzuwandeln, muss die Dezimalzahl nur durch die Zahl 16 dividiert und der Rest notiert werden.</p>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">Es entsteht ein Rest 0 bis F (...9,A,B,...,F), daraus entsteht die
+        äquivalente Hexadezimalzahl. Folgende Schritte müssen immer wieder durchgeführt werden:</p>
+    <ol style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+        <li>Die Zahl durch 16 dividieren</li>
+        <li>Den Rest der Division notieren</li>
+        <li>Falls das Ergebnis nicht 0 ist, Schritt 1 und 2 wiederholen</li>
+    <li>Das Ergebnis lässt sich nach Abschluss von unten nach oben aus dem Rest ablesen</li>
+    </ol>
+
+    <h4 style="margin-left: 50px;">Beispiel:</h4>
+    <div style="margin-left: 100px; margin-right: 100px; font-size: 20px;" class="table table-striped">
+        <p>234 / 16 = 14 Rest: A</p>
+        <p>14 / 16 = 0 Rest: E</p>
+
+
+    </div>
+    <p style="margin-left: 100px; margin-right: 100px; font-size: 20px;">Die Dezimalzahl 234 ergibt daher die Hexadezimalzahl:
+        EA</p>
+
+{% endblock %}
