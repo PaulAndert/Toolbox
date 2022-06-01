@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    <h1 style="margin-left: 50px;">Rechner:</h1>
+    <form action="results" method="post">
+        {% csrf_token %}
+
+        <div style="margin-left: 100px; font-size: 20px;">
+            <p>Gebe den R-wert ein: <input type="text" name="r"></p>
+            <p>Gebe den G-wert ein: <input type="text" name="g"></p>
+            <p>Gebe den B-wert ein: <input type="text" name="b"></p>
+            <input type="submit" class="btn btn-outline-primary">
+            <p style="opacity:{{ op }}">Error : {{ error }}</p>
+            <p>C : {{ c }} </p>
+            <p>M : {{ m }} </p>
+            <p>Y : {{ y }} </p>
+            <p>K : {{ k }} </p>
+        </div>
+
+    </form>
+
+    <h1 style="margin-left: 50px;">RGB zu CMYK</h1>
+    <h3 style="margin-left: 50px;">Tutorial zum Selbermachen:</h3>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+        Wenn man R: 0, G: 0 und B: 0 hat ist es einfach C: 0, M: 0, Y: 0 und K: 1 <br>
+    </p>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+        wenn das nicht der fall ist rechnet man zuerst <br>
+        gelb = 1 - blau / 255 <br>
+        cyan = 1 - rot / 255 <br>
+        magenta = 1 - grün / 255 <br>
+    </p>
+    <p style="margin-left: 100px; margin-right:100px; font-size: 20px;">
+        Dann muss man den kleinsten der drei neu berechneten werte finden, dieser ist CMY_minimum, damit kann man dann die entgültigen werte ausrechnen <br>
+        cyan = (cyan - CMY_minimum) / (1 - CMY_minimum)<br>
+        magenta = (magenta - CMY_minimum) / (1 - CMY_minimum)<br>
+        gelb = (gelb - CMY_minimum) / (1 - CMY_minimum)<br>
+        kontrolle = CMY_minimum<br>
+    </p>
+
+{% endblock %}
