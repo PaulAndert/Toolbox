@@ -117,9 +117,10 @@ def cmykToRgb(request, cmyk_scale=100, rgb_scale=255):
 
 def manage_functions(request, pk=None):
     if pk:
-        function = Application.objects.get(pk=pk).functionname
+        function = Application.objects.get(pk=pk)
+        # switcher.update((pk, function.name)) -- Beispiel!!
 
-    return render(request, f'app/{function}.html', {'page_title': f'{function}', 'id': f'{pk}', 'op': 0, })
+    return render(request, f'app/{function}.html', {'page_title': f'{function.name}', 'id': f'{pk}', 'op': 0, })
 
 
 switcher = {
