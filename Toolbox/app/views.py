@@ -46,16 +46,34 @@ def octalToDecimal(request):
                   {'page_title': f'octalToDecimal', 'result': result, 'number': number})
 
 
-def decimalToOctal(decimal_num):
-    return oct(decimal_num)
+def decimalToOctal(request):
+    number = request.POST['bin']
+    try:
+        result = oct(int(number))
+    except:
+        result = "Geben Sie bitte eine Dezimalzahl ein"
+    return render(request, f'app/decimalToOctal.html',
+                  {'page_title': f'decimalToOctal', 'result': result, 'number': number})
 
 
-def decimalToHexa(num):
-    return hex(num)
+def decimalToHexa(request):
+    number = request.POST['bin']
+    try:
+        result = hex(int(number))
+    except:
+        result = "Geben Sie bitte eine Dezimalzahl ein"
+    return render(request, f'app/decimalToHexa.html',
+                  {'page_title': f'decimalToHexa', 'result': result, 'number': number})
 
 
-def hexaToDecimal(hexa_num):
-    return int(hexa_num, 16)
+def hexaToDecimal(request):
+    number = request.POST['hex']
+    try:
+        result = int(number, 16)
+    except:
+        result = "Geben Sie bitte eine Hexadezimalzahl ein"
+    return render(request, f'app/hexaToDecimal.html',
+                  {'page_title': f'hexaToDecimal', 'result': result, 'number': number})
 
 
 def rgbToCmyk(request, CMYK_SCALE=100, RGB_SCALE=255):
