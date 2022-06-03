@@ -50,8 +50,6 @@ def select_function(request, pk=None):
 
         exec(values + function.functionname, globals(), loc)
 
-
-
         if loc['error']:
             raise ValueError()
 
