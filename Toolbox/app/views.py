@@ -173,6 +173,8 @@ def select_function(request, pk=None):
         for i in range(1, function.inputanzahl + 1):
             values += alphabet[i] + " = '" + (request.POST[alphabet[i]]) + "'\n"
 
+        values += 'error = False \n'
+
         loc = {}
 
         print(values + function.functionname)
