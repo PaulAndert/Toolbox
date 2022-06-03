@@ -55,7 +55,9 @@ def select_function(request, pk=None):
             val = val.replace('{{ ' + alphabet[i] + ' }}', str(loc[alphabet[i]]))
 
         return render(request, f'app/template.html',
-                      {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val,
+                      {'page_title': f'{function.name}',
+                       'id': f'{pk}',
+                       'templatecode': val,
                        'description': function.description, })
     except:
         val = function.templatetext.replace('{{ opci }}', '1').replace('{{ error }}', function.errormessage)
@@ -134,7 +136,7 @@ def app_create(request):
     templatetext += '<input type="submit" class="btn btn-outline-primary"><p style="opacity:{{ opci }}">Error : {{ error }}</p>'
     for x in range(1, output_variable + 1):
         templatetext += out_str.replace('{{ name }}', request.POST[alphabet[x] + 'out']) \
-            .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}')
+            .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}') + '\n'
 
     a = Application(name=appname, inputanzahl=input_variable, outputanzahl=output_variable, templatetext=templatetext,
                     errormessage=error, description=desc, functionname=code)
