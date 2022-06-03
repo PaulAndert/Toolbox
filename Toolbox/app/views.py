@@ -87,7 +87,6 @@ code = ''
 error = ''
 desc = ''
 
-
 def next_app(request):
     templatetext = ''
     global appname
