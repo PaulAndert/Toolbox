@@ -55,7 +55,9 @@ def select_function(request, pk=None):
             val = val.replace('{{ ' + alphabet[i] + ' }}', str(loc[alphabet[i]]))
 
         return render(request, f'app/template.html',
-                      {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val,
+                      {'page_title': f'{function.name}',
+                       'id': f'{pk}',
+                       'templatecode': val,
                        'description': function.description, })
     except:
         val = function.templatetext.replace('{{ opci }}', '1').replace('{{ error }}', function.errormessage)
@@ -125,11 +127,11 @@ def app_create(request):
     for x in range(1, input_variable + 1):
         templatetext += in_str.replace('{{ name }}', request.POST[alphabet[x] + 'in']) \
             .replace('{{ type }}', request.POST[alphabet[x] + 'typein']) \
-            .replace('{{ alpha }}', alphabet[x])
-    templatetext += '<input type="submit" class="btn btn-outline-primary"><p style="opacity:{{ opci }}">Error : {{ error }}</p>'
+            .replace('{{ alpha }}', alphabet[x]) + '\n'
+    templatetext += '<input type="submit" class="btn btn-outline-primary">\n<p style="opacity:{{ opci }}">Error : {{ error }}</p>'
     for x in range(1, output_variable + 1):
         templatetext += out_str.replace('{{ name }}', request.POST[alphabet[x] + 'out']) \
-            .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}')
+            .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}') + '\n'
 
     a = Application(name=appname, inputanzahl=input_variable, outputanzahl=output_variable, templatetext=templatetext, errormessage=error, description=desc, functionname=code)
     a.save()
