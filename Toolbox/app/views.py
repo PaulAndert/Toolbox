@@ -14,6 +14,7 @@ alphabet = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e',
             21: 'u', 22: 'v', 23: 'w', 24: 'x', 25: 'y',
             26: 'z',}
 
+
 class ApplicationList(ListView):
     model = Application
 
@@ -49,8 +50,6 @@ def select_function(request, pk=None):
         loc = {}
 
         exec(values + function.functionname, globals(), loc)
-
-
 
         if loc['error']:
             raise ValueError()
