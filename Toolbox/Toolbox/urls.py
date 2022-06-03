@@ -23,5 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('<int:pk>/', manage_functions, name='manage'),
     path('<int:pk>/results', select_function, name='results'),
+    path('create/', create_template, name='create'),
+    path('create/next', next_app, name='next'),
+    path('create/appcreate', app_create, name='appcreate'),
 
 ]

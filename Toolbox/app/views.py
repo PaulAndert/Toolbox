@@ -162,6 +162,7 @@ def manage_functions(request, pk=None):
                    'id': f'{pk}',
                    'op': 0,
                    'templatecode': val,
+                   'description': function.description,
                    })
 
 
@@ -181,13 +182,13 @@ def select_function(request, pk=None):
         if loc['error']:
             raise ValueError()
 
-        val = function.templatetext.replace('{{ opci }}', '0', 1)
+        val = function.templatetext.replace('{{ opci }}', '0')
 
         for i in range(1, function.outputanzahl + 1):
             val = val.replace('{{ ' + alphabet[i] + ' }}', str(loc[alphabet[i]]))
 
         return render(request, f'app/template.html',
-                      {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val, })
+                      {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val, 'description': function.description,})
     except:
         val = function.templatetext.replace('{{ opci }}', '1').replace('{{ error }}', function.errormessage)
         for i in range(1, function.outputanzahl + 1):
@@ -195,5 +196,72 @@ def select_function(request, pk=None):
         return render(request, f'app/template.html',
                       {'page_title': f'{function.name}',
                        'id': f'{pk}',
-                       'templatecode': val
+                       'templatecode': val,
+                       'description': function.description,
                        })
+
+
+def create_template(request):
+    return render(request, f'app/create.html', {})
+
+
+input_variable = 0
+output_variable = 0
+appname = ''
+code = ''
+error = ''
+desc = ''
+
+def next_app(request):
+    templatetext = ''
+    global appname
+    global input_variable
+    global output_variable
+    global code
+    global error
+    global desc
+    appname = request.POST['appname']
+    input_variable = int(request.POST['input'])
+    output_variable = int(request.POST['output'])
+    code = request.POST['code']
+    error = request.POST['error']
+    desc = request.POST['description']
+
+    in_str = '<p>Geben sie num. input Variable: <input type="text" name="{{ name }}in">, ' \
+             'und den type: <input type="text" name="{{ type }}in"></p>'
+    out_str = '<p>Geben sie num. output Variable: <input type="text" name="{{ name }}out"></p>'
+
+    for x in range(1, input_variable + 1):
+        templatetext += in_str.replace('num', str(x)).replace('{{ name }}', alphabet[x])\
+            .replace('{{ type }}', alphabet[x] + 'type')
+    templatetext += '<br>'
+    for y in range(1, output_variable + 1):
+        templatetext += out_str.replace('num', str(y)).replace('{{ name }}', alphabet[y])
+
+    return render(request, f'app/inout.html', {'templatetext': templatetext})
+
+
+def app_create(request):
+    templatetext = ''
+    global input_variable
+    global output_variable
+    global appname
+    global code
+    global error
+    global desc
+
+    in_str = '<p>Gebe den {{ name }} ein: <input type="{{ type }}" name="{{ alpha }}"></p>'
+    out_str = '<p>{{ name }} : {{ alpha }} </p>'
+
+    for x in range(1, input_variable + 1):
+        templatetext += in_str.replace('{{ name }}', request.POST[alphabet[x] + 'in']) \
+            .replace('{{ type }}', request.POST[alphabet[x] + 'typein']) \
+            .replace('{{ alpha }}', alphabet[x])
+    templatetext += '<input type="submit" class="btn btn-outline-primary"><p style="opacity:{{ opci }}">Error : {{ error }}</p>'
+    for x in range(1, output_variable + 1):
+        templatetext += out_str.replace('{{ name }}', request.POST[alphabet[x] + 'out']) \
+            .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}')
+
+    a = Application(name=appname, inputanzahl=input_variable, outputanzahl=output_variable, templatetext=templatetext, errormessage=error, description=desc, functionname=code)
+    a.save()
+    return HttpResponseRedirect(reverse_lazy('app_list'))

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Anleitung</h3>
+<p>Konventionen für den python code:</p>
+<p>Input variable sind in der reihenfolge der erstellung nach dem Alphabet benannt,
+    bitte die variablen für den output dann auch der reihenfolge der ausgabe dem alphabet nach benennen</p>
+<p>mann kann wenn die eingaben im python code falsch sind mittels
+    error = True die selbst erstellte error nachricht anzeigen lassen</p>
+<p>
+    a = int(a)
+    b = int(b)
+    c = float(c)
+    # auf falsche eingaben prüfen
+    if c > 100:
+    error = True
+    ausgabe1 = a + c
+    ausgabe2 = b - c
+    # dann die output variablen wieder als alphabet benennen also
+    a = ausgabe1
+    b = ausgabe2
+    # jetzt denn error noch festlegen
+    error = False
+</p>
+
+<form action="next" method="post">
+    {% csrf_token %}
+
+    <p>Geben sie den namen ihrer App ein: <input type="text" name="appname"></p>
+    <p>Geben sie die anzahl der input parameter ein: <input type="number" min="0" name="input"></p>
+    <p>Geben sie die anzahl der output parameter ein: <input type="number" min="1" name="output"></p>
+    <p>Geben sie ihren python code ein, beachten sie die Konventionen: </p>
+    <textarea rows="20" cols="100" name="code"></textarea>
+    <p>Geben sie eine Beschreibung ein:</p>
+    <textarea rows="10" cols="100" name="description"></textarea>
+    <p>Geben sie die error message ein: </p>
+    <textarea rows="1" cols="100" name="error"></textarea>
+    <br>
+    <br>
+    <input type="submit" class="btn btn-outline-primary">
+    <br>
+    <br>
+    <br>
+
+</form>
+
+</body>
+</html>
