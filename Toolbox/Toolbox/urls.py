@@ -26,5 +26,4 @@ urlpatterns = [
     path('create/', create_template, name='create'),
     path('create/next', next_app, name='next'),
     path('create/appcreate', app_create, name='appcreate'),
-
 ]

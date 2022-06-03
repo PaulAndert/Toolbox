@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class Application(models.Model):
     class Meta:
@@ -9,9 +8,8 @@ class Application(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=300)
-    functionname = models.CharField(max_length=500)
-    templatetext = models.CharField(max_length=500)
-    inputanzahl = models.IntegerField()
-    outputanzahl = models.IntegerField()
-    errormessage = models.CharField(max_length=100)
-
+    function = models.CharField(max_length=500)
+    template_text = models.CharField(max_length=500)
+    input_anzahl = models.IntegerField()
+    output_anzahl = models.IntegerField()
+    error_message = models.CharField(max_length=100)
