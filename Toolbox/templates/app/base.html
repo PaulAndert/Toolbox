@@ -13,14 +13,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
         <h1><a href="/" style="text-decoration: underline;
         text-decoration: solid; text-decoration: black ;
-         margin-left: 10px">Toolbox</a></h1>
+         margin-left: 10px; width: 150px">Toolbox</a></h1>
         {% bootstrap_messages %}
-        <div style="margin-left: 50px">
+
+    <div style="display: table; box-sizing: border-box; clear: both;">
+    <div style="float: left; width: 10%">
+        {% block create %}
+        {% endblock %}
+    </div>
+
+        <div class="col-9 mx-auto" style="margin-left: 50px; float: left; width: 90%">
+
         {% block content %}
 
             Dummy aus basis template
 
         {% endblock %}
         </div>
+    </div>
     </body>
 </html>
