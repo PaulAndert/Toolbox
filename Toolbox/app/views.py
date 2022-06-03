@@ -188,7 +188,8 @@ def select_function(request, pk=None):
             val = val.replace('{{ ' + alphabet[i] + ' }}', str(loc[alphabet[i]]))
 
         return render(request, f'app/template.html',
-                      {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val, 'description': function.description,})
+                      {'page_title': f'{function.name}', 'id': f'{pk}', 'templatecode': val,
+                       'description': function.description, })
     except:
         val = function.templatetext.replace('{{ opci }}', '1').replace('{{ error }}', function.errormessage)
         for i in range(1, function.outputanzahl + 1):
@@ -212,6 +213,7 @@ code = ''
 error = ''
 desc = ''
 
+
 def next_app(request):
     templatetext = ''
     global appname
@@ -227,13 +229,18 @@ def next_app(request):
     error = request.POST['error']
     desc = request.POST['description']
 
-    in_str = '<p>Geben sie num. input Variable: <input type="text" name="{{ name }}in">, ' \
-             'und den type: <input type="text" name="{{ type }}in"></p>'
+    in_str = '''<p>Geben sie {{ num }}. input Variable: <input type="text" name="{{ name }}in">,
+             und den type: <select class="btn btn-outline-primary" name="type" id="type">
+             <option value="number" selected>Number</option>
+             <option value="text">Text</option>
+             <option value="email">Email</option>
+             <option value="date">Date</option>
+             <option value="time">Time</option>
+             </select></p>'''
     out_str = '<p>Geben sie num. output Variable: <input type="text" name="{{ name }}out"></p>'
 
     for x in range(1, input_variable + 1):
-        templatetext += in_str.replace('num', str(x)).replace('{{ name }}', alphabet[x])\
-            .replace('{{ type }}', alphabet[x] + 'type')
+        templatetext += in_str.replace('{{ num }}', str(x)).replace('{{ name }}', alphabet[x])
     templatetext += '<br>'
     for y in range(1, output_variable + 1):
         templatetext += out_str.replace('num', str(y)).replace('{{ name }}', alphabet[y])
@@ -250,18 +257,19 @@ def app_create(request):
     global error
     global desc
 
-    in_str = '<p>Gebe den {{ name }} ein: <input type="{{ type }}" name="{{ alpha }}"></p>'
+    in_str = '<p>Geben Sie {{ name }} ein: <input type="{{ type }}" name="{{ alpha }}"></p>'
     out_str = '<p>{{ name }} : {{ alpha }} </p>'
 
     for x in range(1, input_variable + 1):
         templatetext += in_str.replace('{{ name }}', request.POST[alphabet[x] + 'in']) \
-            .replace('{{ type }}', request.POST[alphabet[x] + 'typein']) \
+            .replace('{{ type }}', request.POST['type']) \
             .replace('{{ alpha }}', alphabet[x])
     templatetext += '<input type="submit" class="btn btn-outline-primary"><p style="opacity:{{ opci }}">Error : {{ error }}</p>'
     for x in range(1, output_variable + 1):
         templatetext += out_str.replace('{{ name }}', request.POST[alphabet[x] + 'out']) \
             .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}')
 
-    a = Application(name=appname, inputanzahl=input_variable, outputanzahl=output_variable, templatetext=templatetext, errormessage=error, description=desc, functionname=code)
+    a = Application(name=appname, inputanzahl=input_variable, outputanzahl=output_variable, templatetext=templatetext,
+                    errormessage=error, description=desc, functionname=code)
     a.save()
     return HttpResponseRedirect(reverse_lazy('app_list'))
