@@ -142,7 +142,7 @@ def app_create(request):
         template_text += out_str.replace('{{ name }}', request.POST[alphabet[x] + 'out']) \
                             .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}') + '\n'
 
-    a = Application(name=app_name, inputanzahl=input_variable, outputanzahl=output_variable,
-                    templatetext=template_text, errormessage=error, description=desc, functionname=code)
+    a = Application(name=app_name, input_anzahl=input_variable, output_anzahl=output_variable,
+                    template_text=template_text, error_message=error, description=desc, function=code)
     a.save()
     return HttpResponseRedirect(reverse_lazy('app_list'))
