@@ -101,15 +101,15 @@ def next_app(request):
     error = request.POST['error']
     desc = request.POST['description']
 
-    in_str = '''<p>Geben sie {{ num }}. input Variable: <input type="text" name="{{ name }}in">,
-             und den type: <select class="btn btn-outline-primary" name="type" id="type">
-             <option value="number" selected>Number</option>
-             <option value="text">Text</option>
+    in_str = '''<p>Geben Sie die {{ num }}. Input-Variable ein: <input type="text" name="{{ name }}in" required>
+             und den Typen: <select class="btn btn-outline-primary" name="type" id="type">
+             <option value="text" selected>Text</option>
+             <option value="number">Number</option>
              <option value="email">Email</option>
              <option value="date">Date</option>
              <option value="time">Time</option>
              </select></p>'''
-    out_str = '<p>Geben sie num. output Variable: <input type="text" name="{{ name }}out"></p>'
+    out_str = '<p>Geben Sie die num. Output-Variable ein: <input type="text" name="{{ name }}out" required></p>'
 
     for x in range(1, input_variable + 1):
         template_text += in_str.replace('{{ num }}', str(x)).replace('{{ name }}', alphabet[x])
@@ -129,8 +129,8 @@ def app_create(request):
     global error
     global desc
 
-    in_str = '<p>Geben Sie {{ name }} ein: <input type="{{ type }}" name="{{ alpha }}"></p>'
-    out_str = '<p>{{ name }} : {{ alpha }} </p>'
+    in_str = '<p>Gebe {{ name }} ein: <input type="{{ type }}" step=any name="{{ alpha }}" required></p>'
+    out_str = '<p>{{ name }}: {{ alpha }} </p>'
 
     for x in range(1, input_variable + 1):
         template_text += in_str.replace('{{ name }}', request.POST[alphabet[x] + 'in']) \
@@ -142,7 +142,7 @@ def app_create(request):
         template_text += out_str.replace('{{ name }}', request.POST[alphabet[x] + 'out']) \
                             .replace('{{ alpha }}', '{{ ' + alphabet[x] + ' }}') + '\n'
 
-    a = Application(name=app_name, inputanzahl=input_variable, outputanzahl=output_variable,
-                    templatetext=template_text, errormessage=error, description=desc, functionname=code)
+    a = Application(name=app_name, input_anzahl=input_variable, output_anzahl=output_variable,
+                    template_text=template_text, error_message=error, description=desc, function=code)
     a.save()
     return HttpResponseRedirect(reverse_lazy('app_list'))

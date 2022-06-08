@@ -3,13 +3,15 @@
 {% block content %}
 
     <div class="col-8 mx-auto">
-        <h3>Anleitung</h3>
-        <p>Konventionen für den python code:<br></p>
-        <p>Input Variablen alphabetisch benennen, ebenso für output Variblen ansonsten kann es zu fehlern kommen.<br>
+        <h3>Anleitung:</h3>
+        <p>Konventionen für den Python-Code:<br></p>
+        <p>Variablen sollten in den gewünschten Type gecastet werden.</p>
+        <p>Bei Einrückungen muss drauf geachtet werden, dass 4 Leerzeichen gemacht werden, sonst wird diese nicht erkannt.</p>
+        <p>Input-Variablen alphabetisch benennen, ebenso für Output-Variblen ansonsten kann es zu Fehlern kommen.<br>
         </p>
-        <p>Error ist standardmäßig auf False, wenn auf True gesetzt wird kann die eigene Errormeldung ausgegeben werden
+        <p>Error ist standardmäßig auf False, wenn auf True gesetzt wird, kann die eigene Errormeldung ausgegeben werden.
             <br></p>
-        <p>Nach diesem Schema sollte alles funktionieren</p>
+        <p>Nach diesem Schema sollte alles funktionieren:</p>
         <p>
             a = int(a) <br>
             b = int(b) <br>
@@ -17,24 +19,24 @@
             if c > 100:
         <pre>
     error = True </pre>
-        ausgabe1 = a + c <br>
-        ausgabe2 = b - c <br>
-        a = ausgabe1 <br>
-        b = ausgabe2 <br>
+        ausgabe_1 = a + c <br>
+        ausgabe_2 = b - c <br>
+        a = ausgabe_1 <br>
+        b = ausgabe_2 <br>
         </p>
 
         <form action="next" method="post">
             {% csrf_token %}
 
-            <p>Geben sie den namen ihrer App ein: <input type="text" name="appname"></p>
-            <p>Geben sie die anzahl der input parameter ein: <input type="number" min="0" name="input"></p>
-            <p>Geben sie die anzahl der output parameter ein: <input type="number" min="1" name="output"></p>
-            <p>Geben sie ihren python code ein, beachten sie die Konventionen: </p>
-            <textarea rows="20" cols="100" name="code"></textarea>
-            <p>Geben sie eine Beschreibung ein:</p>
-            <textarea rows="10" cols="100" name="description"></textarea>
-            <p>Geben sie die error message ein: </p>
-            <textarea rows="1" cols="100" name="error"></textarea>
+            <p>Geben Sie den Namen ihrer Applikation ein: <input type="text" name="appname" required></p><br>
+            <p>Geben Sie die Anzahl der Inputparameter ein: <input type="number" min="0" name="input" required></p><br>
+            <p>Geben Sie die Anzahl der Outputparameter ein: <input type="number" min="1" name="output" required></p><br>
+            <p>Geben Sie ihren Python-Code ein, beachten Sie die Konventionen: </p>
+            <textarea rows="20" cols="100" name="code" required></textarea>
+            <p style="margin-top: 25px">Geben Sie eine Beschreibung ein:</p>
+            <textarea rows="10" cols="100" name="description" required></textarea>
+            <p style="margin-top: 25px">Geben Sie die Errormeldung ein: </p>
+            <textarea rows="1" cols="100" name="error" required></textarea>
             <br>
             <br>
             <input type="submit" class="btn btn-outline-primary">
