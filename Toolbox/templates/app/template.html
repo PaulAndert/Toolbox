@@ -2,21 +2,23 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <h1 style="margin-left: 50px;">{{ page_title }}</h1>
-    <h1 style="margin-left: 50px;">Rechner:</h1>
+    <h1 style="margin-left: 50px;">{{ page_title }}</h1><br>
+    <h1 style="margin-left: 50px;">Rechner:</h1><br>
     <form action="results" method="post">
         {% csrf_token %}
 
-        <div style="margin-left: 100px; font-size: 20px;">
+        <div style="margin-left: 100px; margin-right: 100px; font-size: 20px;">
 
-            {{ templatecode |safe}}
+            {{ templatecode |safe }}
 
         </div>
 
     </form>
 
-    {{ description |safe }}
-
+    <h1 style="margin-left: 50px;">Beschreibung:</h1><br>
+    <div style="margin-left: 100px; margin-right: 100px; font-size: 20px;">
+        {{ description |safe }}
+    </div>
 
 
 {% endblock %}
