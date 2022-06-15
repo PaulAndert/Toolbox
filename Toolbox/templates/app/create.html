@@ -29,8 +29,8 @@
             {% csrf_token %}
 
             <p>Geben Sie den Namen ihrer Applikation ein: <input type="text" name="appname" required></p><br>
-            <p>Geben Sie die Anzahl der Inputparameter ein: <input type="number" min="0" name="input" required></p><br>
-            <p>Geben Sie die Anzahl der Outputparameter ein: <input type="number" min="1" name="output" required></p><br>
+            <p>Geben Sie die Anzahl der Inputparameter ein: <input type="number" min="0" max="26" step="1" name="input" required></p><br>
+            <p>Geben Sie die Anzahl der Outputparameter ein: <input type="number" min="1" max="26" step="1" name="output" required></p><br>
             <p>Geben Sie ihren Python-Code ein, beachten Sie die Konventionen: </p>
             <textarea rows="20" cols="100" name="code" required></textarea>
             <p style="margin-top: 25px">Geben Sie eine Beschreibung ein:</p>
